@@ -17,7 +17,7 @@
 
 import pytest
 
-from configarium.models.python_logging import LoggerConfig, LoggingConfig
+from configarium_models.models.python_logging import LoggerConfig, LoggingConfig
 
 
 def test_python_logging() -> None:

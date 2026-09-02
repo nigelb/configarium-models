@@ -17,7 +17,7 @@
 
 import logging
 from datetime import datetime, timezone
-from enum import Enum
+from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -48,17 +48,11 @@ class LoggerConfig(BaseModel):
         return value.upper()
 
 
-class LoggerFormatStyle(str, Enum):
-    """
-    The logger format style to use in the logging format.
-
-    See the style field of: https://docs.python.org/3/library/logging.html#formatter-objects
-    """
-
-    PRINTF   = "%" # https://docs.python.org/3/library/stdtypes.html#old-string-formatting
-    FORMAT   = "{" # https://docs.python.org/3/library/stdtypes.html#str.format
-    TEMPLATE = "$"# https://docs.python.org/3/library/string.html#string.Template
-
+LoggerFormatStyle = Literal[
+    "%", # printf:   https://docs.python.org/3/library/stdtypes.html#old-string-formatting
+    "{", # format:   https://docs.python.org/3/library/stdtypes.html#str.format
+    "$", # template: https://docs.python.org/3/library/string.html#string.Template
+]
 
 class LoggingConfig(BaseModel):
     """
@@ -73,7 +67,7 @@ class LoggingConfig(BaseModel):
 
     style: LoggerFormatStyle = Field(
                                 description="Logging format style used in the format string.",
-                                default=LoggerFormatStyle.PRINTF)
+                                default="%")
 
     log_level: str = Field(
         description="The log level of the root logger",
